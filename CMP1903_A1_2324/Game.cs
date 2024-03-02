@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,33 @@ namespace CMP1903_A1_2324
          * rolls could be continous, and the totals and other statistics could be summarised for example.
          */
 
+        //properties
+
+        private List<Die> _dice = new List<Die>();
+        public List<Die> Dice { get { return _dice; } } //read only
         //Methods
 
-    }
+        public void RollDice(int rollCount) { //create dice objects and roll them
+            for (int rolls = 0; rolls < rollCount; rolls++)
+            {
+                _dice.Insert(rolls, new Die());
+                _dice[rolls].Roll();
+
+            }
+
+        }
+
+        public int SumDice()
+        {
+            int sum = 0;
+            foreach(Die d in _dice)
+            {
+                sum += d.DiceValue;
+            }
+
+            return sum;
+        }
+            
+    }       
+
 }
