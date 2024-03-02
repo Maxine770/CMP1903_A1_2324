@@ -41,6 +41,11 @@ namespace CMP1903_A1_2324
 
             return sum;
         }
+
+        public double MeanDice()
+        {
+            return SumDice() / _dice.Count();
+        }
             
     }       
 

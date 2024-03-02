@@ -17,7 +17,9 @@ namespace CMP1903_A1_2324
             Game GameObj = new Game();
             GameObj.RollDice(3);
             int diceSum = GameObj.SumDice();
-            Console.WriteLine(diceSum);
+            double diceMean = GameObj.MeanDice();
+            Console.WriteLine($"The sum of the dice is: {diceSum}");
+            Console.WriteLine($"The mean of the dice is: {diceMean}");
 
             Testing testing = new Testing();
             testing.Test();
