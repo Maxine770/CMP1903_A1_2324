@@ -15,7 +15,7 @@ namespace CMP1903_A1_2324{
         /// <summary>
         /// The entry point for the program.
         /// </summary>
-        /// <param name="args"></param>
+        /// <param name="args"> Command line arguments </param>
         public static void Main(string[] args){
             // Create a game object and roll dice equal to the constant diceToRoll
             // And output the sum and mean of the dice rolls to console
