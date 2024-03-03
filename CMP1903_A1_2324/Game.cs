@@ -42,7 +42,7 @@ namespace CMP1903_A1_2324{
         public int SumDice(){
             int sum = 0; //initalise sum as 0
             foreach(Die d in _dice){//iterate through dice list
-              sum += d.DiceValue; //incrememnt sum by current dice's value
+                sum += d.DiceValue; //incrememnt sum by current dice's value
             }
 
             return sum;
