@@ -20,9 +20,9 @@ namespace CMP1903_A1_2324
          */
 
         //Method
-        private static const int diceToRoll = 3;
-        private static const int diceMax = 6;
-        private static const int diceMin = 1;
+        private const int diceToRoll = 3;
+        private const int diceMax = 6;
+        private const int diceMin = 1;
 
         public void Test()
         {

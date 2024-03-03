@@ -15,7 +15,7 @@ namespace CMP1903_A1_2324
          */
 
         //Property
-        private static const  Random rnd = new Random();
+        private static readonly  Random rnd = new Random();
 
         private int _diceValue = -1;
         public int DiceValue { get { return _diceValue; }} //read only
