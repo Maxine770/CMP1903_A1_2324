@@ -26,7 +26,7 @@ namespace CMP1903_A1_2324
         public void Test()
         {
             Game GameObj = new Game();
-            GameObj.RollDice(diceToRoll); //expect list of size 3 with dice info.
+            GameObj.RollDice(diceToRoll, true); //expect list of size 3 with dice info.
             Debug.Assert(GameObj.Dice.Count() == diceToRoll, "Game.RollDice() was asked to produce a List of size 3 and failed to do so.");
 
             int sum = 0;

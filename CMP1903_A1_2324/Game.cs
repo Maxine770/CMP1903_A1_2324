@@ -21,11 +21,14 @@ namespace CMP1903_A1_2324
         public List<Die> Dice { get { return _dice; } } //read only to allow for testing.
         //Methods
 
-        public void RollDice(int rollCount) { //create dice objects and roll them
+        public void RollDice(int rollCount, bool silent = false) { //create dice objects and roll them, optional parameter to be silent (for tests)
             for (int rolls = 0; rolls < rollCount; rolls++)
             {
                 _dice.Insert(rolls, new Die());
                 _dice[rolls].Roll();
+                if (!silent) {
+                    Console.WriteLine($"Rolled a dice with a value of: {_dice[rolls].DiceValue}");
+                }
 
             }
 
