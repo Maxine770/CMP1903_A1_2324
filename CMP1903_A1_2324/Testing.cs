@@ -20,19 +20,20 @@ namespace CMP1903_A1_2324
          */
 
         //Method
-        const int diceToRoll = 3;
-        const int diceMax = 6;
-        const int diceMin = 1;
+        private static const int diceToRoll = 3;
+        private static const int diceMax = 6;
+        private static const int diceMin = 1;
+
         public void Test()
         {
             Game GameObj = new Game();
-            GameObj.RollDice(diceToRoll, true); //expect list of size 3 with dice info.
-            Debug.Assert(GameObj.Dice.Count() == diceToRoll, "Game.RollDice() was asked to produce a List of size 3 and failed to do so.");
+            GameObj.RollDice(diceToRoll, true); //expect list of size diceToRoll
+            Debug.Assert(GameObj.Dice.Count() == diceToRoll, $"Game.RollDice() was asked to produce a List of size {diceToRoll} and failed to do so.");
 
             int sum = 0;
-            foreach (Die item in GameObj.Dice) //the value of each dice is in range 1 to 6.
+            foreach (Die item in GameObj.Dice) //the value of each dice is in valid range inclusive.
             {
-                Debug.Assert(item.DiceValue <= diceMax && item.DiceValue >= diceMin, "At least one of the dice values created by GameObj.RollDice() exceed the range 1 to 6 inclusive.");
+                Debug.Assert(item.DiceValue <= diceMax && item.DiceValue >= diceMin, $"At least one of the dice values created by GameObj.RollDice() exceed the range {diceMin} to {diceMax} inclusive.");
                 sum += item.DiceValue;
             }
             Debug.Assert(sum == GameObj.SumDice(), "The GameObj.SumDice() method did not output the expected sum.");
@@ -43,7 +44,7 @@ namespace CMP1903_A1_2324
 
             Die die = new Die();
             die.Roll();
-            Debug.Assert(die.DiceValue <= diceMax &&  die.DiceValue >= diceMin, "Die.Roll() produced a die with a value outside of 1 and 6 inclusive."); //the value of die is within range.
+            Debug.Assert(die.DiceValue <= diceMax &&  die.DiceValue >= diceMin, $"Die.Roll() produced a die with a value outside of {diceMin} and {diceMax} inclusive."); //the value of die is within range.
         }
     }
 }

@@ -21,7 +21,9 @@ namespace CMP1903_A1_2324
         public List<Die> Dice { get { return _dice; } } //read only to allow for testing.
         //Methods
 
-        public void RollDice(int rollCount, bool silent = false) { //create dice objects and roll them, optional parameter to be silent (for tests)
+        public void RollDice(int rollCount, bool silent = false)
+        {
+            ///create dice objects and roll them, optional parameter to be silent (for tests)
             for (int rolls = 0; rolls < rollCount; rolls++)
             {
                 _dice.Insert(rolls, new Die());
@@ -36,6 +38,7 @@ namespace CMP1903_A1_2324
 
         public int SumDice()
         {
+            ///Sum value of all dice objects
             int sum = 0;
             foreach(Die d in _dice)
             {
