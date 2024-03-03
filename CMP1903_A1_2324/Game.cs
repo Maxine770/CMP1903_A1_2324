@@ -10,7 +10,6 @@ namespace CMP1903_A1_2324{
     /// Methods allow for calculating various statistics of the dice values in the list.
     /// </summary>
     internal class Game{
-        
         //Properties
         private List<Die> _dice = new List<Die>();
 
@@ -32,7 +31,6 @@ namespace CMP1903_A1_2324{
                     Console.WriteLine($"Rolled a dice with a value of: {_dice.Last().DiceValue}");
                 }
             }
-
         }
 
         /// <summary>
@@ -44,7 +42,6 @@ namespace CMP1903_A1_2324{
             foreach(Die d in _dice){//iterate through dice list
                 sum += d.DiceValue; //incrememnt sum by current dice's value
             }
-
             return sum;
         }
 

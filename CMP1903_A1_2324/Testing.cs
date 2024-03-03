@@ -49,6 +49,7 @@ namespace CMP1903_A1_2324{
             //Create a new die and roll it.
             Die die = new Die();
             die.Roll();
+
             //Check if the dice value is in valid range, raise exception otherwise.
             Debug.Assert(die.DiceValue <= _diceMax &&  die.DiceValue >= _diceMin, $"Die.Roll() produced a die with a value outside of {_diceMin} and {_diceMax} inclusive.");
         }
