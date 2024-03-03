@@ -18,7 +18,7 @@ namespace CMP1903_A1_2324
         //properties
 
         private List<Die> _dice = new List<Die>();
-        public List<Die> Dice { get { return _dice; } } //read only
+        public List<Die> Dice { get { return _dice; } } //read only to allow for testing.
         //Methods
 
         public void RollDice(int rollCount) { //create dice objects and roll them
@@ -40,6 +40,13 @@ namespace CMP1903_A1_2324
             }
 
             return sum;
+        }
+
+        public double MeanDice()
+        {
+            double sum = SumDice();
+            double mean =  sum / _dice.Count();
+            return mean; 
         }
             
     }       

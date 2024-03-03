@@ -14,10 +14,13 @@ namespace CMP1903_A1_2324
              * Create a Game object and call its methods.
              * Create a Testing object to verify the output and operation of the other classes.
              */
+            const int diceToRoll = 3;
             Game GameObj = new Game();
-            GameObj.RollDice(3);
+            GameObj.RollDice(diceToRoll);
             int diceSum = GameObj.SumDice();
-            Console.WriteLine(diceSum);
+            double diceMean = GameObj.MeanDice();
+            Console.WriteLine($"The sum of the dice is: {diceSum}");
+            Console.WriteLine($"The mean of the dice is: {diceMean}");
 
             Testing testing = new Testing();
             testing.Test();
