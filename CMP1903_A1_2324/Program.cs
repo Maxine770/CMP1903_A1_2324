@@ -9,13 +9,15 @@ namespace CMP1903_A1_2324
 {
     internal class Program
     {
+        private const int diceToRoll = 3;
+
         public static void Main(string[] args)
         {
             /*
              * Create a Game object and call its methods.
              * Create a Testing object to verify the output and operation of the other classes.
              */
-            const int diceToRoll = 3;
+
             Game GameObj = new Game();
             GameObj.RollDice(diceToRoll);
             int diceSum = GameObj.SumDice();

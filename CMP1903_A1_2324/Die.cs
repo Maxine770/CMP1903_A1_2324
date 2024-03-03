@@ -23,10 +23,10 @@ namespace CMP1903_A1_2324
         //Method
 
         public int Roll()
-        {
+        { 
+
             _diceValue = rnd.Next(1, 7);
             return _diceValue;
         }
-
     }
 }

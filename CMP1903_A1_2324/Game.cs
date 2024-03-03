@@ -31,7 +31,6 @@ namespace CMP1903_A1_2324
                 if (!silent) {
                     Console.WriteLine($"Rolled a dice with a value of: {_dice[rolls].DiceValue}");
                 }
-
             }
 
         }
