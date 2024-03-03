@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
 {
+    /// <summary>
+    /// A class for testing various other methods and classes via debug.assert()
+    /// </summary>
     internal class Testing
     {
 
@@ -19,12 +22,12 @@ namespace CMP1903_A1_2324
          * Use debug.assert() to make the comparisons and tests.
          */
 
-        //Method
+        //Properties
         private const int diceToRoll = 3;
         private const int diceMax = 6;
         private const int diceMin = 1;
 
-        public void Test()
+        public void Test() //TODO seperate these into multiple tests.
         {
             Game GameObj = new Game();
             GameObj.RollDice(diceToRoll, true); //expect list of size diceToRoll

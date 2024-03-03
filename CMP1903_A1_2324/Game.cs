@@ -6,35 +6,41 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
 {
+    /// <summary>
+    /// Represents a dice game, rolled dice are continous and added to a list.
+    /// Methods allow for calculating various statistics of the dice values in the list.
+    /// </summary>
     internal class Game
     {
-        /*
-         * The Game class should create three die objects, roll them, sum and report the total of the three dice rolls.
-         *
-         * EXTRA: For extra requirements (these aren't required though), the dice rolls could be managed so that the
-         * rolls could be continous, and the totals and other statistics could be summarised for example.
-         */
-
-        //properties
+        //Properties
 
         private List<Die> _dice = new List<Die>();
         public List<Die> Dice { get { return _dice; } } //read only to allow for testing.
+        
         //Methods
 
+        /// <summary>
+        /// Create and roll dice objects and add them to the Dice list.
+        /// </summary>
+        /// <param name="rollCount"> The number of dice to roll </param>
+        /// <param name="silent"> (Optional) If true will not print to console. </param>
         public void RollDice(int rollCount, bool silent = false)
         {
-            ///create dice objects and roll them, optional parameter to be silent (for tests)
-            for (int rolls = 0; rolls < rollCount; rolls++)
+            for (int rolls = 0; rolls < rollCount; rolls++) 
             {
-                _dice.Insert(rolls, new Die());
-                _dice[rolls].Roll();
+                _dice.Add(new Die());
+                _dice.Last().Roll();
                 if (!silent) {
-                    Console.WriteLine($"Rolled a dice with a value of: {_dice[rolls].DiceValue}");
+                    Console.WriteLine($"Rolled a dice with a value of: {_dice.Last().DiceValue}");
                 }
             }
 
         }
 
+        /// <summary>
+        /// Returns the sum of all the dice values in the dice list
+        /// </summary>
+        /// <returns> The sum of all the dice values in the dice list </returns>
         public int SumDice()
         {
             ///Sum value of all dice objects
@@ -47,6 +53,10 @@ namespace CMP1903_A1_2324
             return sum;
         }
 
+        /// <summary>
+        /// Returns the mean of all the dice values in the dice list
+        /// </summary>
+        /// <returns> The mean of all the dice values in the dice list </returns>
         public double MeanDice()
         {
             double sum = SumDice();

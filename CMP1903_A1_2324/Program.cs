@@ -9,8 +9,10 @@ namespace CMP1903_A1_2324
 {
     internal class Program
     {
+        //Properties
         private const int diceToRoll = 3;
 
+        //Methods
         public static void Main(string[] args)
         {
             /*
