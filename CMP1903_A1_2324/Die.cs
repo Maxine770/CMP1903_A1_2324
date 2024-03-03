@@ -5,23 +5,19 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMP1903_A1_2324
-{
+namespace CMP1903_A1_2324{
     /// <summary>
-    /// A class for handling a singular dice, tracking its current dice value.
+    /// A class for handling and rolling a singular dice, tracking its current dice value.
+    /// Dices are made without a value until first rolled.
     /// </summary>
-    internal class Die
-    {
-        /*
-         * The Die class should contain one property to hold the current die value,
-         * and one method that rolls the die, returns and integer and takes no parameters.
-         */
-
+    internal class Die{
         //Properties
-        private static readonly  Random rnd = new Random();
+        private static readonly  Random _rnd = new Random(); //random object used for randomising each dice roll
+        private const int _diceMax = 6; //the maximum value of dice inclusive
+        private const int _diceMin = 1; //the minimum value of dice inclusive
+        private int _diceValue; //the current value of this die
 
-        private int _diceValue = -1;
-        public int DiceValue { get { return _diceValue; }} //read only
+        public int DiceValue {get{return _diceValue;}} //read only
 
         //Methods
 
@@ -29,11 +25,9 @@ namespace CMP1903_A1_2324
         /// Roll the dice with a value between 1 and 6 inclusive and updating the dice's value.
         /// </summary>
         /// <returns> The dice value the rolled dice was changed to </returns>
-        public int Roll()
-        {
-            _diceValue = rnd.Next(1, 7);
-            return _diceValue;
+        public int Roll(){
+            _diceValue = _rnd.Next(_diceMin, _diceMax+1); //randomise dice value to a value in range diceMin to diceMax inclusive.
+            return _diceValue; //return the new dice value
         }
-
     }
 }
