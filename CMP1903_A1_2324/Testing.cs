@@ -25,20 +25,20 @@ namespace CMP1903_A1_2324{
             //Check if dice list created is the same size as the amount of dice we rolled, raise exception otherwise.
             Game gameObj = new Game();
             gameObj.RollDice(_diceToRoll, true); //expect list of size diceToRoll, pass in true as second argument to silence output from RollDice
-            Debug.Assert(gameObj.Dice.Count() == _diceToRoll, $"Game.RollDice() was asked to produce a List of size {_diceToRoll} and did not give the expected output");
+            Debug.Assert(gameObj.Dice.Count() == _diceToRoll, $"Game.RollDice() was expected to produce a List of size {_diceToRoll} and instead produced a list of size {gameObj.Dice.Count()}");
 
             //Check if dice made by game object have values in valid range, raise exception otherwise.
             int sum = 0; //initalise sum to 0.
             foreach (Die item in gameObj.Dice){ //iterate through each dice in the dice list of the gameObj.
-                Debug.Assert(item.DiceValue <= _diceMax && item.DiceValue >= _diceMin, $"At least one of the dice values of the die created by Game.RollDice() are outside the range {_diceMin} to {_diceMax} inclusive.");
+                Debug.Assert(item.DiceValue <= _diceMax && item.DiceValue >= _diceMin, $"The following dice value {item.DiceValue} of at least one of the die created by Game.RollDice() is outside the expected range {_diceMin} and {_diceMax} inclusive.");
                 sum += item.DiceValue; //add it to running total.
             }
             //Check if sum given by SumDice matches expected output, raise exception otherwise.
-            Debug.Assert(sum == gameObj.SumDice(), "The Game.SumDice() method did not output the expected sum.");
+            Debug.Assert(sum == gameObj.SumDice(), $"The Game.SumDice() method did not output the expected sum. \n Expected: {sum} \n Got: {gameObj.SumDice()}");
 
             //Check if mean given by MeanDice matches expected output, raise exception otherwise.
             double floatSum = sum; //convert previous sum to a float to ensure float division is used and not integer divison.
-            Debug.Assert(floatSum/gameObj.Dice.Count() == gameObj.MeanDice(), "The Game.MeanDice() method did not output the expected mean.");
+            Debug.Assert(floatSum/gameObj.Dice.Count() == gameObj.MeanDice(), $"The Game.MeanDice() method did not output the expected mean. \n Expected: {floatSum/gameObj.Dice.Count()} \n Got: {gameObj.MeanDice()}");
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace CMP1903_A1_2324{
             die.Roll();
 
             //Check if the dice value is in valid range, raise exception otherwise.
-            Debug.Assert(die.DiceValue <= _diceMax &&  die.DiceValue >= _diceMin, $"Die.Roll() produced a die with a value outside of {_diceMin} and {_diceMax} inclusive.");
+            Debug.Assert(die.DiceValue <= _diceMax &&  die.DiceValue >= _diceMin, $"Die.Roll() produced a die with a value of {die.DiceValue} which is outside of the expected range {_diceMin} and {_diceMax} inclusive.");
         }
     }
 }
