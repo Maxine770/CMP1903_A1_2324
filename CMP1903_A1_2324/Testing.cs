@@ -30,7 +30,7 @@ namespace CMP1903_A1_2324{
             //Check if dice made by game object have values in valid range, raise exception otherwise.
             int sum = 0; //initalise sum to 0.
             foreach (Die item in gameObj.Dice){ //iterate through each dice in the dice list of the gameObj.
-                Debug.Assert(item.DiceValue <= _diceMax && item.DiceValue >= _diceMin, $"At least one of the dice values created by Game.RollDice() are outside the range {_diceMin} to {_diceMax} inclusive.");
+                Debug.Assert(item.DiceValue <= _diceMax && item.DiceValue >= _diceMin, $"At least one of the dice values of the die created by Game.RollDice() are outside the range {_diceMin} to {_diceMax} inclusive.");
                 sum += item.DiceValue; //add it to running total.
             }
             //Check if sum given by SumDice matches expected output, raise exception otherwise.
