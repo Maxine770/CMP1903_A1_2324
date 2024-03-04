@@ -50,7 +50,7 @@ namespace CMP1903_A1_2324{
         /// </summary>
         /// <returns> The mean of all the dice values in the dice list. </returns>
         public double MeanDice(){
-            double sum = SumDice();
+            double sum = SumDice(); //ensure float division (and not integer division) is used by converting int from SumDice() into a float.
             double mean =  sum / _dice.Count();
             return mean; 
         }   

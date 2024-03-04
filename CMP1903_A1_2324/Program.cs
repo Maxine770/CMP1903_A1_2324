@@ -19,10 +19,10 @@ namespace CMP1903_A1_2324{
         public static void Main(string[] args){
             // Create a game object and roll dice equal to the constant diceToRoll
             // And output the sum and mean of the dice rolls to console
-            Game GameObj = new Game();
-            GameObj.RollDice(_diceToRoll);
-            int diceSum = GameObj.SumDice();
-            double diceMean = GameObj.MeanDice();
+            Game gameObj = new Game();
+            gameObj.RollDice(_diceToRoll);
+            int diceSum = gameObj.SumDice();
+            double diceMean = gameObj.MeanDice();
             Console.WriteLine($"The sum of the dice is: {diceSum}");
             Console.WriteLine($"The mean of the dice is: {diceMean}");
 
