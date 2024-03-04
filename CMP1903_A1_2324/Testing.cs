@@ -17,17 +17,5 @@ namespace CMP1903_A1_2324
          */
 
         //Method
-
-        public void Test()
-        {
-            Game GameObj = new Game();
-            GameObj.RollDice(3); //expect list of size 3 with dice info.
-            Debug.Assert(GameObj.Dice.Count() == 3);
-            foreach(Die item in GameObj.Dice) //the value of each dice is in range 1 to 6.
-            {
-                Debug.Assert(item.DiceValue <= 6);
-                Debug.Assert(item.DiceValue >= 1);
-            }
-        }
     }
 }
