@@ -28,7 +28,7 @@ namespace CMP1903_A1_2324{
                 Console.WriteLine("Please input an integer number of dice to roll that is more than 0. Input a non-valid integer or a number less than 1 to exit.");
                 string userInput = Console.ReadLine();
 
-                if (!int.TryParse(userInput, out diceToRoll)){ // If user input is valid continue and set diceToRoll to the integer of user input, terminate otherwise.
+                if (!int.TryParse(userInput, out diceToRoll)){ // If user input is valid integer continue and set diceToRoll to the integer of user input, terminate otherwise.
                     break; // Terminate.
                 }
                 if(diceToRoll <= 0){
