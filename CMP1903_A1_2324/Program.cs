@@ -7,32 +7,42 @@ using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324{
     internal class Program{
-        //Properties
-        private const int _diceToRoll = 3;
-
-        //Methods
+        // Methods
 
         /// <summary>
         /// The entry point for the program.
         /// </summary>
-        /// <param name="args"> Command line arguments </param>
+        /// <param name="args"> Command line arguments. </param>
         public static void Main(string[] args){
-            // Create a game object and roll dice equal to the constant diceToRoll
-            // And output the sum and mean of the dice rolls to console
-            Game gameObj = new Game();
-            gameObj.RollDice(_diceToRoll);
-            int diceSum = gameObj.SumDice();
-            double diceMean = gameObj.MeanDice();
-            Console.WriteLine($"The sum of the dice is: {diceSum}");
-            Console.WriteLine($"The mean of the dice is: {diceMean}");
-
-            //Run tests
+            // Run tests.
             Testing testing = new Testing();
             testing.GameTest();
             testing.DieTest();
 
-            //Wait for user input before closing console
-            Console.ReadLine();
+            Game gameObj = new Game();
+            int diceToRoll;
+
+            // While running
+            while (true){
+                // Take user input.
+                Console.WriteLine("Please input an integer number of dice to roll that is more than 0. Input a non-valid integer or a number less than 1 to exit.");
+                string userInput = Console.ReadLine();
+
+                if (!int.TryParse(userInput, out diceToRoll)){ // If user input is valid continue and set diceToRoll to the integer of user input, terminate otherwise.
+                    break; // Terminate.
+                }
+                if(diceToRoll <= 0){
+                    break; // Terminate.
+                }
+
+                gameObj.RollDice(diceToRoll);
+
+                // Run statistics and output to console.
+                int diceSum = gameObj.SumDice();
+                double diceMean = gameObj.MeanDice();
+                Console.WriteLine($"The sum of all the dice rolled so far is: {diceSum}");
+                Console.WriteLine($"The mean of all the dice rolled so far is: {diceMean}");
+            }
         }
     }
 }
