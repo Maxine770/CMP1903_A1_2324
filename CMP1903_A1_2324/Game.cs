@@ -4,19 +4,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CMP1903_A1_2324
-{
-    internal class Game
-    {
-        /*
-         * The Game class should create three die objects, roll them, sum and report the total of the three dice rolls.
-         *
-         * EXTRA: For extra requirements (these aren't required though), the dice rolls could be managed so that the
-         * rolls could be continous, and the totals and other statistics could be summarised for example.
-         */
+namespace CMP1903_A1_2324{
+    /// <summary>
+    /// Represents a dice game, rolled dice are continuous and added to a list unique per game instance.
+    /// Methods allow for calculating various statistics of the dice values in the list.
+    /// </summary>
+    internal class Game{
+        // Properties
+        private List<Die> _dice = new List<Die>();
 
-        //properties
+        public List<Die> Dice{get{return _dice;}} // Read only.
+        
+        // Methods
 
-        //Methods
-    }      
+        /// <summary>
+        /// Create and roll dice instances and add them to the end of the dice list.
+        /// Outputs the value of rolled dice to console.
+        /// </summary>
+        /// <param name="rollCount"> The number of dice to roll. </param>
+        /// <param name="silent"> (Optional) If true will not print to console. </param>
+        public void RollDice(int rollCount, bool silent = false){
+            for (int rolls = 0; rolls < rollCount; rolls++){
+                _dice.Add(new Die());
+                _dice.Last().Roll();
+                if (!silent){
+                    Console.WriteLine($"Rolled a dice with a value of: {_dice.Last().DiceValue}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns the sum of all the dice values in the dice list.
+        /// </summary>
+        /// <returns> The sum of all the dice values in the dice list. </returns>
+        public int SumDice(){
+            int sum = 0;
+            foreach(Die d in _dice){ // Iterate through dice list.
+                sum += d.DiceValue; // Increment sum by current dice's value.
+            }
+            return sum;
+        }
+
+        /// <summary>
+        /// Returns the mean of all the dice values in the dice list.
+        /// </summary>
+        /// <returns> The mean of all the dice values in the dice list. </returns>
+        public double MeanDice(){
+            double sum = SumDice(); // Ensure float division (and not integer division) is used by converting int from SumDice() into a float.
+            double mean =  sum / _dice.Count();
+            return mean; 
+        }   
+    }       
 }
