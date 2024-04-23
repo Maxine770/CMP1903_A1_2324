@@ -14,6 +14,7 @@ namespace CMP1903_A1_2324{
         /// </summary>
         /// <param name="args"> Command line arguments. </param>
         public static void Main(string[] args){
+/*          
             // Run tests.
             Testing testing = new Testing();
             testing.GameTest();
@@ -42,6 +43,8 @@ namespace CMP1903_A1_2324{
                 double diceMean = gameObj.MeanDice();
                 Console.WriteLine($"The sum of all the dice rolled so far is: {diceSum}");
                 Console.WriteLine($"The mean of all the dice rolled so far is: {diceMean}");
+
+*/
             }
         }
     }

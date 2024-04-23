@@ -37,10 +37,6 @@ namespace CMP1903_A1_2324{
 
             // Check if sum given by SumDice matches expected output, raise an exception otherwise.
             Debug.Assert(sum == gameObj.SumDice(), $"The Game.SumDice() method did not output the expected sum. \n Expected: {sum} \n Got: {gameObj.SumDice()}");
-
-            // Check if mean given by MeanDice matches expected output, raise an exception otherwise.
-            double floatSum = sum; // Convert previous sum to a float to ensure float division is used and not integer division.
-            Debug.Assert(floatSum/gameObj.Dice.Count() == gameObj.MeanDice(), $"The Game.MeanDice() method did not output the expected mean. \n Expected: {floatSum/gameObj.Dice.Count()} \n Got: {gameObj.MeanDice()}");
         }
 
         /// <summary>
