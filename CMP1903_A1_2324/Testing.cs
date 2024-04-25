@@ -24,7 +24,7 @@ namespace CMP1903_A1_2324{
         public void GameTest(){
             // Create a new game instance and make it roll dice equal to number of dice to roll.
             // Check if dice list created is the same size as the amount of dice we rolled, raise an exception otherwise.
-            Game gameObj = new Game();
+            Game gameObj = new Game(true);
             gameObj.RollDice(_diceToRoll, true); // Expect list of size diceToRoll, pass in true as the second argument to silence output from RollDice.
             Debug.Assert(gameObj.Dice.Count() == _diceToRoll, $"Game.RollDice() was expected to produce a list of size {_diceToRoll} and instead produced a list of size {gameObj.Dice.Count()}");
 
@@ -36,7 +36,7 @@ namespace CMP1903_A1_2324{
             }
 
             // Check if sum given by SumDice matches expected output, raise an exception otherwise.
-            Debug.Assert(sum == gameObj.SumDice(), $"The Game.SumDice() method did not output the expected sum. \n Expected: {sum} \n Got: {gameObj.SumDice()}");
+            Debug.Assert(sum == gameObj.SumDice(gameObj.Dice), $"The Game.SumDice() method did not output the expected sum. \n Expected: {sum} \n Got: {gameObj.SumDice(gameObj.Dice)}");
         }
 
         /// <summary>
