@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 //Must we do highscores for three or more if the game ends the instant you go over 20? Check.
 //Statistics does *not* mean sumdice needs to be moved over so thats nice.
 //TODO implement menu and testing and statistics class.
-namespace CMP1903_A1_2324
-{
+namespace CMP1903_A1_2324{
     internal class Program{
         // Methods
 
@@ -55,6 +54,10 @@ namespace CMP1903_A1_2324
             Game game = new Game(false);
             ThreeOrMore threeOrMore = new ThreeOrMore(false);
             threeOrMore.TakeTurn();
+            SevensOut sevensOut = new SevensOut(false);
+            sevensOut.Play();
+            Statistics.DisplayStatistics();
+            Console.ReadLine();
         }
     }
 }

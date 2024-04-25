@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,10 +16,10 @@ namespace CMP1903_A1_2324{
         protected List<Die> _dice = new List<Die>();
         protected List<Die> _currentBatch = new List<Die>(); // list containing dice rolled this specific batch rather than over the lifespan of this game object.
         protected int _score = 0;
-        protected bool _isComputer; // true if this game object is a computer player, false if human player
+        protected bool _isComputer; // true if this game instance is a computer player, false if human player
 
         public List<Die> Dice{get{return _dice;}} // Read only.
-        public List<Die> currentBatch { get { return _currentBatch;}} // Read only
+        //public List<Die> CurrentBatch { get { return _currentBatch;}} // Read only TODO, need?
 
         public Game(bool IsComputer)
         {
@@ -83,12 +84,15 @@ namespace CMP1903_A1_2324{
                 // check if sum is 7
                 if (sumOfRolledDice == 7)
                 {
-                    Console.WriteLine($"Sum of dice is seven, final score is {_score}");
+                    Console.WriteLine($"Sum of dice is 7, final score is {_score}");
+                    if (!_isComputer) //if not computer check if this score is new high score
+                    {
+                        Statistics.SevensOutUpdateHighScore(_score);
+                    }
                     return _score;
                 }
 
-                // check if rolled doubles
-                if (rolledDice[0].DiceValue == rolledDice[1].DiceValue) {
+                if (rolledDice[0].DiceValue == rolledDice[1].DiceValue) { //check if doubles
                     Console.WriteLine($"Rolled doubles! \n Sum: {sumOfRolledDice} \n Scored: {sumOfRolledDice * 2}");
                     _score += sumOfRolledDice * 2;
                 } else
@@ -104,7 +108,9 @@ namespace CMP1903_A1_2324{
     {
         public ThreeOrMore(bool _isComputer) : base(_isComputer) { } // inherit constructor
 
-       public void TakeTurn() //TODO change void to int and return score
+        private bool _hasWon = false;
+        public bool HasWon { get { return _hasWon; } }
+        public int TakeTurn()
         {
             if (!_isComputer)
             {
@@ -117,11 +123,11 @@ namespace CMP1903_A1_2324{
             string userInput;
             int bestCombo = 0;
             // rolled dice that are two of a kind or better. Dice values that are one of a kind are useless, as any rerolls will eliminate them and they serve no purpose otherwise.
-            //Dice value is the value of the dice and instances is the number of dice with that value.
+            //Dice value is the value of the dice and count is the number of dice with that value.
             var rolledDiceScoring =
                 from dice in rolledDice
                 group dice by dice.DiceValue into grp //group same dice values into same group
-                where grp.Count() >=2
+                where grp.Count() >= 2
                 select new { diceValue = grp.Key, count = grp.Count() };
 
             if (!rolledDiceScoring.Any())
@@ -134,7 +140,7 @@ namespace CMP1903_A1_2324{
             {
                 rerollDice = true;
                 bool isFullHouse = false;
-                foreach ( var combo in rolledDiceScoring) //check if least one of the two is a three of a kind
+                foreach (var combo in rolledDiceScoring) //check if least one of the two is a three of a kind
                 {
                     if (combo.count == 3) // 
                     {
@@ -143,7 +149,7 @@ namespace CMP1903_A1_2324{
                     }
                 }
 
-                if(isFullHouse)
+                if (isFullHouse)
                 {
                     if (!_isComputer) {
                         Console.WriteLine("You have rolled a three of a kind and a two of a kind, press enter to reroll the two of a kind.");
@@ -156,12 +162,12 @@ namespace CMP1903_A1_2324{
                 {
                     if (!_isComputer)
                     {
-                        Console.WriteLine("You have rolled two seperate two of a kinds, input the dice value belonging to the dice in one of the two of the kinds you wish to reroll. Input anything else or a dice value that is not part of a two of a kind to reroll ALL dice.");
-                        string userInput = Console.ReadLine();
+                        Console.WriteLine("You have rolled two seperate two of a kinds, input the dice value belonging to the dice in one of the two of the kinds that you wish to reroll. Input anything else or a dice value that is not part of a two of a kind to reroll ALL dice.");
+                        userInput = Console.ReadLine();
 
                         if (int.TryParse(userInput, out int temp))
-                        { 
-                            foreach(var combo in rolledDiceScoring)
+                        {
+                            foreach (var combo in rolledDiceScoring)
                             {
                                 if (combo.diceValue == temp) //if dice value chosen is one of the two dice values belonging to the two seperate two of a kinds, then keep said dice value and reroll all else. Otherwise reroll all.
                                 {
@@ -171,12 +177,12 @@ namespace CMP1903_A1_2324{
                         }
                     } else
                     {
-                        Console.WriteLine("The computer has rolled two seperate two of a kinds and has chosen to reroll all dice.")
+                        Console.WriteLine("The computer has rolled two seperate two of a kinds and has chosen to reroll all dice.");
                     }
                 }
-            } else //only have 1 combo from now on.
+            } else //Only one two of a kind and no three of a kind.
             {
-                foreach( var combo in rolledDiceScoring)
+                foreach (var combo in rolledDiceScoring)
                 {
                     if (combo.count == 2)
                     {
@@ -195,7 +201,7 @@ namespace CMP1903_A1_2324{
                             }
                         }
                     }
-                }    
+                }
             }
             //End of deciding which dice to reroll
 
@@ -203,17 +209,23 @@ namespace CMP1903_A1_2324{
             if (rerollDice) {
                 foreach (Die currentDie in rolledDice)
                 {
-                    if (currentDie != diceValueToKeep) //if not keeping this die, reroll it.
+                    if (currentDie.DiceValue != diceValueToKeep) //if not keeping this die, reroll it.
                     {
                         currentDie.Roll();
                     }
                 }
-            }
+
+                Console.WriteLine("The final set of dice after rerolling is the following:");
+                foreach (Die die in rolledDice)
+                {
+                    Console.WriteLine(die.DiceValue);
+                }
+            } 
 
             //Find best combo, ensures full house will always return the three of a kind as best combo.
             foreach( var combo in rolledDiceScoring)
             {
-                if (combo.diceValue > bestCombo)
+                if (combo.count > bestCombo)
                 {
                     bestCombo = combo.count;
                 }
@@ -222,10 +234,15 @@ namespace CMP1903_A1_2324{
             if (bestCombo >=3) //3 of a kind scores 3, 4 of a kind scores 6, 5 of a kind scores 12.
             {
                 Console.WriteLine($"Scored {3 * Math.Pow(2,(bestCombo - 3))} points.");
-                _score += 3 * Math.Pow(2,(bestCombo - 3));
+                _score += Convert.ToInt32(3 * Math.Pow(2,(bestCombo - 3)));
+                if (_score >= 20)
+                {
+                    _hasWon = true; //set flag but dont output to screen as don't know if this is player 1 or player 2.
+                }
+
             } else
             {
-                Console.WriteLine("Scored no points.")
+                Console.WriteLine("Scored no points.");
             }
 
             return _score;
