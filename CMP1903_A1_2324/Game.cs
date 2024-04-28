@@ -13,7 +13,7 @@ namespace CMP1903_A1_2324{
     /// </summary>
     internal class Game{
         // Properties
-        protected List<Die> _dice = new List<Die>();
+        protected List<Die> _dice = new List<Die>(); // all dice rolled over the life span of this game object
         protected List<Die> _currentBatch = new List<Die>(); // list containing dice rolled this specific batch rather than over the lifespan of this game object.
         protected int _score = 0;
         protected bool _isComputer; // true if this game instance is a computer player, false if human player
@@ -63,6 +63,20 @@ namespace CMP1903_A1_2324{
             return sum;
         }
 
+        internal static bool UserInputPlayer2IsComputer()
+        {
+            Console.WriteLine("Input Y or y if player 2 is a computer, and anything else if they are a player.");
+            string userInput = Console.ReadLine();
+
+            if (userInput.ToLower() == "y")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 
@@ -70,6 +84,8 @@ namespace CMP1903_A1_2324{
     {
         public SevensOut(bool _isComputer) : base(_isComputer) { } //inherit constructor
 
+        private List<int> _sumHistory = new List<int>(); //for testing
+        public List<int> SumHistory { get { return _sumHistory; } } //read only
         public int Play()
         {
             while (true){ // keep going until seven rolled
@@ -80,7 +96,7 @@ namespace CMP1903_A1_2324{
                 }
                 List<Die> rolledDice = RollDice(2); // this batch of dice
                 int sumOfRolledDice = SumDice(rolledDice);
-
+                _sumHistory.Add(sumOfRolledDice);
                 // check if sum is 7
                 if (sumOfRolledDice == 7)
                 {
@@ -88,6 +104,9 @@ namespace CMP1903_A1_2324{
                     if (!_isComputer) //if not computer check if this score is new high score
                     {
                         Statistics.SevensOutUpdateHighScore(_score);
+                        Console.WriteLine("Press enter to continue");
+                        Console.ReadLine();
+                           
                     }
                     return _score;
                 }
@@ -109,7 +128,11 @@ namespace CMP1903_A1_2324{
         public ThreeOrMore(bool _isComputer) : base(_isComputer) { } // inherit constructor
 
         private bool _hasWon = false;
+        private List<Die> _currentDice = new List<Die>();
+
         public bool HasWon { get { return _hasWon; } }
+        public List<Die> CurrentDice { get {  return _currentDice; } } //read only, for testing.
+
         public int TakeTurn()
         {
             if (!_isComputer)
@@ -117,30 +140,30 @@ namespace CMP1903_A1_2324{
                 Console.WriteLine("Press enter to roll dice");
                 Console.ReadLine();
             }
-            List<Die> rolledDice = RollDice(5); // current dice in play
+            _currentDice = RollDice(5); // current dice in play
             int diceValueToKeep = 0; //If rerolling dice, reroll all dice that aren't this value. By default will reroll all dice.
             bool rerollDice = false;
             string userInput;
             int bestCombo = 0;
             // rolled dice that are two of a kind or better. Dice values that are one of a kind are useless, as any rerolls will eliminate them and they serve no purpose otherwise.
             //Dice value is the value of the dice and count is the number of dice with that value.
-            var rolledDiceScoring =
-                from dice in rolledDice
+            var currentDiceScoring =
+                from dice in _currentDice
                 group dice by dice.DiceValue into grp //group same dice values into same group
                 where grp.Count() >= 2
                 select new { diceValue = grp.Key, count = grp.Count() };
 
-            if (!rolledDiceScoring.Any())
+            if (!currentDiceScoring.Any())
             {
                 Console.WriteLine("All dice are unique, nothing has been scored.");
                 return _score;
             }
             //Reroll edge case handling.
-            if (rolledDiceScoring.Count() == 2) //two pair or full house
+            if (currentDiceScoring.Count() == 2) //two pair or full house
             {
                 rerollDice = true;
                 bool isFullHouse = false;
-                foreach (var combo in rolledDiceScoring) //check if least one of the two is a three of a kind
+                foreach (var combo in currentDiceScoring) //check if least one of the two is a three of a kind
                 {
                     if (combo.count == 3) // 
                     {
@@ -167,7 +190,7 @@ namespace CMP1903_A1_2324{
 
                         if (int.TryParse(userInput, out int temp))
                         {
-                            foreach (var combo in rolledDiceScoring)
+                            foreach (var combo in currentDiceScoring)
                             {
                                 if (combo.diceValue == temp) //if dice value chosen is one of the two dice values belonging to the two seperate two of a kinds, then keep said dice value and reroll all else. Otherwise reroll all.
                                 {
@@ -182,7 +205,7 @@ namespace CMP1903_A1_2324{
                 }
             } else //Only one two of a kind and no three of a kind.
             {
-                foreach (var combo in rolledDiceScoring)
+                foreach (var combo in currentDiceScoring)
                 {
                     if (combo.count == 2)
                     {
@@ -205,25 +228,21 @@ namespace CMP1903_A1_2324{
             }
             //End of deciding which dice to reroll
 
-            //Execute rerolls, if any.
+            //Execute rerolls, if any and output all final dice values after rerolling if any were rerolled
             if (rerollDice) {
-                foreach (Die currentDie in rolledDice)
+                Console.WriteLine("The final set of dice after rerolling is the following:");
+                foreach (Die currentDie in _currentDice)
                 {
                     if (currentDie.DiceValue != diceValueToKeep) //if not keeping this die, reroll it.
                     {
                         currentDie.Roll();
                     }
-                }
-
-                Console.WriteLine("The final set of dice after rerolling is the following:");
-                foreach (Die die in rolledDice)
-                {
-                    Console.WriteLine(die.DiceValue);
+                    Console.WriteLine(currentDie.DiceValue); //output dice value after rerolling
                 }
             } 
 
             //Find best combo, ensures full house will always return the three of a kind as best combo.
-            foreach( var combo in rolledDiceScoring)
+            foreach( var combo in currentDiceScoring)
             {
                 if (combo.count > bestCombo)
                 {
@@ -245,6 +264,7 @@ namespace CMP1903_A1_2324{
                 Console.WriteLine("Scored no points.");
             }
 
+            Console.WriteLine($"Current score is now: {_score}");
             return _score;
         }
     }
