@@ -9,7 +9,7 @@ namespace CMP1903_A1_2324{
     /// <summary>
     /// A class for testing various other methods and classes output via debug.assert()
     /// </summary>
-    internal static class Testing{
+    internal class Testing{
         // Properties
         private const int _diceToRoll = 3; // The amount of dice to ask GameObj to roll.
         // _diceMax and _diceMin define the range of dice rolls inclusive.
@@ -21,7 +21,7 @@ namespace CMP1903_A1_2324{
         /// <summary>
         /// Method for testing the Game class and its methods to ensure their output matches expected output.
         /// </summary>
-        public static void GameTest(){
+        public void GameTest(){
             // Create a new game instance and make it roll dice equal to number of dice to roll.
             // Check if dice list created is the same size as the amount of dice we rolled, raise an exception otherwise.
             Game gameObj = new Game(true);
@@ -42,7 +42,7 @@ namespace CMP1903_A1_2324{
         /// <summary>
         /// Method for testing the Die class and its methods to ensure their output matches expected output.
         /// </summary>
-        public static void DieTest(){
+        public void DieTest(){
             // Create a new die and roll it.
             Die die = new Die();
             die.Roll();
@@ -51,7 +51,7 @@ namespace CMP1903_A1_2324{
             Debug.Assert(die.DiceValue <= _diceMax &&  die.DiceValue >= _diceMin, $"Die.Roll() produced a die with a value of {die.DiceValue} which is outside of the expected range {_diceMin} and {_diceMax} inclusive.");
         }
 
-        public static void SevensOutTest(){
+        public void SevensOutTest(){
             SevensOut sevensOut = new SevensOut(true);
             int sevensOutScore = sevensOut.Play();
             Debug.Assert(sevensOut.SumHistory.Last() == 7, $"A game of SevensOut ended with a sum that wasn't 7. Expected: 7 Got: {sevensOut.SumHistory.Last()}");
@@ -67,7 +67,7 @@ namespace CMP1903_A1_2324{
 
         }
 
-        public static void ThreeOrMoreTest() {
+        public void ThreeOrMoreTest() {
             ThreeOrMore threeOrMore = new ThreeOrMore(true);
             int threeOrMoreScoreOld = 0; //score before taking a turn
             int expectedScore;

@@ -49,6 +49,7 @@ namespace CMP1903_A1_2324{
             int option = 0;
             bool running = true;
             bool player2IsComputer;
+            Testing testing = new Testing();
 
             Console.WriteLine("Welcome. Note in all instances player 1 goes first, player 2 can be either a computer or human player.");
 
@@ -130,10 +131,10 @@ namespace CMP1903_A1_2324{
                         Statistics.DisplayStatistics();
                         break;
                     case 4: // testing
-                        Testing.GameTest();
-                        Testing.DieTest();
-                        Testing.SevensOutTest();
-                        Testing.ThreeOrMoreTest();
+                        testing.GameTest();
+                        testing.DieTest();
+                        testing.SevensOutTest();
+                        testing.ThreeOrMoreTest();
                         Console.WriteLine("Testing concluded.");
                         break;
                     case 5: // quit

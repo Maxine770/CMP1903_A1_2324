@@ -14,12 +14,10 @@ namespace CMP1903_A1_2324{
     internal class Game{
         // Properties
         protected List<Die> _dice = new List<Die>(); // all dice rolled over the life span of this game object
-        protected List<Die> _currentBatch = new List<Die>(); // list containing dice rolled this specific batch rather than over the lifespan of this game object.
         protected int _score = 0;
         protected bool _isComputer; // true if this game instance is a computer player, false if human player
 
         public List<Die> Dice{get{return _dice;}} // Read only.
-        //public List<Die> CurrentBatch { get { return _currentBatch;}} // Read only TODO, need?
 
         public Game(bool IsComputer)
         {
@@ -36,18 +34,18 @@ namespace CMP1903_A1_2324{
         /// <param name="silent"> (Optional) If true will not print to console. </param>
         /// <returns> A list of current batch of dice rolled </returns>
         public List<Die> RollDice(int rollCount, bool silent = false){
-            _currentBatch.Clear();
+            List<Die> currentBatch = new List<Die>(); // list containing dice rolled this specific batch rather than over the lifespan of this game object.
             for (int rolls = 0; rolls < rollCount; rolls++){
                 Die currentDie = new Die();
                 currentDie.Roll();
-                _currentBatch.Add(currentDie);
+                currentBatch.Add(currentDie);
                 _dice.Add(currentDie);
                 if (!silent){
                     Console.WriteLine($"Rolled a dice with a value of: {currentDie.DiceValue}");
                 }
             }
 
-            return _currentBatch; //returns list of dice rolled this batch
+            return currentBatch; //returns list of dice rolled this batch
         }
 
         /// <summary>
