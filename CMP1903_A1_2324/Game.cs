@@ -99,7 +99,7 @@ namespace CMP1903_A1_2324{
                 if (sumOfRolledDice == 7)
                 {
                     Console.WriteLine($"Sum of dice is 7, final score is {_score}");
-                    if (!_isComputer) //if not computer check if this score is new high score
+                    if (!_isComputer) //if not computer check if this score is new high score and prompt for input
                     {
                         Statistics.SevensOutUpdateHighScore(_score);
                         Console.WriteLine("Press enter to continue");
