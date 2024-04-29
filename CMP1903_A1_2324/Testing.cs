@@ -55,10 +55,10 @@ namespace CMP1903_A1_2324{
             SevensOut sevensOut = new SevensOut(true);
             int sevensOutScore = sevensOut.Play();
             Debug.Assert(sevensOut.SumHistory.Last() == 7, $"A game of SevensOut ended with a sum that wasn't 7. Expected: 7 Got: {sevensOut.SumHistory.Last()}");
-            for(int i = 0; i < (sevensOut.SumHistory.Count()); i+=2) //sum every pair in dice history and check if it matches sevensOut sumHistory.
+            for(int i = 0; i < (sevensOut.Dice.Count()); i+=2) //sum every pair in dice history and check if it matches sevensOut sumHistory.
             {
                 int pairSum = sevensOut.Dice[i].DiceValue + sevensOut.Dice[i + 1].DiceValue;
-                if (i < sevensOut.SumHistory.Count() - 2) //verify no pairs before the last pair summed to 7.
+                if (i < sevensOut.Dice.Count() - 2) //verify no pairs before the last pair summed to 7.
                 {
                     Debug.Assert(pairSum != 7, "SevensOut got a sum of seven but continued to roll more dice.");
                 }
