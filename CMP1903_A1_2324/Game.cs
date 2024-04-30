@@ -163,7 +163,7 @@ namespace CMP1903_A1_2324{
                 bool isFullHouse = false;
                 foreach (var combo in currentDiceScoring) //check if least one of the two is a three of a kind
                 {
-                    if (combo.count == 3) // 
+                    if (combo.count == 3)
                     {
                         isFullHouse = true;
                         diceValueToKeep = combo.diceValue; //spare the three of a kind from rerolling
