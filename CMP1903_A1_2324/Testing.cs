@@ -24,7 +24,7 @@ namespace CMP1903_A1_2324{
         public void GameTest(){
             // Create a new game instance and make it roll dice equal to number of dice to roll.
             // Check if dice list created is the same size as the amount of dice we rolled, raise an exception otherwise.
-            Game gameObj = new Game();
+            Game gameObj = new Game(true);
             gameObj.RollDice(_diceToRoll, true); // Expect list of size diceToRoll, pass in true as the second argument to silence output from RollDice.
             Debug.Assert(gameObj.Dice.Count() == _diceToRoll, $"Game.RollDice() was expected to produce a list of size {_diceToRoll} and instead produced a list of size {gameObj.Dice.Count()}");
 
@@ -36,11 +36,7 @@ namespace CMP1903_A1_2324{
             }
 
             // Check if sum given by SumDice matches expected output, raise an exception otherwise.
-            Debug.Assert(sum == gameObj.SumDice(), $"The Game.SumDice() method did not output the expected sum. \n Expected: {sum} \n Got: {gameObj.SumDice()}");
-
-            // Check if mean given by MeanDice matches expected output, raise an exception otherwise.
-            double floatSum = sum; // Convert previous sum to a float to ensure float division is used and not integer division.
-            Debug.Assert(floatSum/gameObj.Dice.Count() == gameObj.MeanDice(), $"The Game.MeanDice() method did not output the expected mean. \n Expected: {floatSum/gameObj.Dice.Count()} \n Got: {gameObj.MeanDice()}");
+            Debug.Assert(sum == gameObj.SumDice(gameObj.Dice), $"The Game.SumDice() method did not output the expected sum. \n Expected: {sum} \n Got: {gameObj.SumDice(gameObj.Dice)}");
         }
 
         /// <summary>
@@ -53,6 +49,52 @@ namespace CMP1903_A1_2324{
 
             // Check if the dice value is in valid range, raise an exception otherwise.
             Debug.Assert(die.DiceValue <= _diceMax &&  die.DiceValue >= _diceMin, $"Die.Roll() produced a die with a value of {die.DiceValue} which is outside of the expected range {_diceMin} and {_diceMax} inclusive.");
+        }
+
+        public void SevensOutTest(){
+            SevensOut sevensOut = new SevensOut(true);
+            int sevensOutScore = sevensOut.Play();
+            Debug.Assert(sevensOut.SumHistory.Last() == 7, $"A game of SevensOut ended with a sum that wasn't 7. Expected: 7 Got: {sevensOut.SumHistory.Last()}");
+            for(int i = 0; i < (sevensOut.Dice.Count()); i+=2) //sum every pair in dice history and check if it matches sevensOut sumHistory.
+            {
+                int pairSum = sevensOut.Dice[i].DiceValue + sevensOut.Dice[i + 1].DiceValue;
+                if (i < sevensOut.Dice.Count() - 2) //verify no pairs before the last pair summed to 7.
+                {
+                    Debug.Assert(pairSum != 7, "SevensOut got a sum of seven but continued to roll more dice.");
+                }
+                Debug.Assert(pairSum == sevensOut.SumHistory[i / 2], $"SevensOut did not correctly sum dice. Expected: {pairSum} Got: {sevensOut.SumHistory[i / 2]}");
+            }
+
+        }
+
+        public void ThreeOrMoreTest() {
+            ThreeOrMore threeOrMore = new ThreeOrMore(true);
+            int threeOrMoreScoreOld = 0; //score before taking a turn
+            int expectedScore;
+            while (threeOrMoreScoreOld < 20) {
+                int threeOrMoreScore = threeOrMore.TakeTurn(); //new score this turn
+                var currentDiceScoring =
+                from dice in threeOrMore.CurrentDice
+                group dice by dice.DiceValue into grp
+                where grp.Count() >= 3 //only scoring hands
+                select new { diceValue = grp.Key, count = grp.Count() };
+                Debug.Assert(threeOrMore.HasWon == (threeOrMoreScore >= 20), $"ThreeOrMore.HasWon did not accurately represent the state of the game. Expected: {threeOrMoreScore >= 20} Got: {threeOrMore.HasWon}"); //is threeOrMore hasWon true if score is at least 20 and false if score lower than 20?
+                if (currentDiceScoring.Any()) //any scoring hand
+                {
+                    var bestCombo = currentDiceScoring.First().count; //currentDiceScoring will only return 1 or 0 values.
+                    expectedScore = Convert.ToInt32((3 * Math.Pow(2, (bestCombo - 3))) + threeOrMoreScoreOld); //add value of hand to threeOrMoreScoreOld
+                }
+                else //no scoring hand
+                {
+                    expectedScore = threeOrMoreScoreOld;
+                }
+                Debug.Assert(threeOrMoreScore == expectedScore, $"ThreeOrMore did not return the expected score. Expected: {expectedScore} Got: {threeOrMoreScore}");
+
+                threeOrMoreScoreOld = threeOrMoreScore;
+                }
+
+
+
         }
     }
 }
